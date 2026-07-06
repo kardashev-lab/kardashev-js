@@ -1,0 +1,66 @@
+{
+  "name": "kardashev",
+  "version": "0.1.0",
+  "description": "Free, open-source JavaScript/TypeScript client for the Kardashev Labs US grid data API - LMP, load, fuel mix, carbon intensity, curtailment, and interconnection queues across 7 US ISOs. No API key required.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "energy",
+    "electricity",
+    "grid",
+    "ISO",
+    "RTO",
+    "CAISO",
+    "ERCOT",
+    "MISO",
+    "NYISO",
+    "ISONE",
+    "SPP",
+    "PJM",
+    "LMP",
+    "wholesale electricity prices",
+    "power grid data",
+    "energy data api",
+    "carbon intensity",
+    "curtailment",
+    "interconnection queue"
+  ],
+  "author": "Kardashev Labs",
+  "license": "MIT",
+  "homepage": "https://kardashevlabs.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kardashev-lab/kardashev-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kardashev-lab/kardashev-js/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsup": "^8.5.1",
+    "typescript": "^5",
+    "vitest": "^4.1.10"
+  }
+}
