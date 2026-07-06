@@ -1,8 +1,11 @@
 {
-  "name": "kardashev",
+  "name": "@kardashev-labs/kardashev",
   "version": "0.1.0",
   "description": "Free, open-source JavaScript/TypeScript client for the Kardashev Labs US grid data API - LMP, load, fuel mix, carbon intensity, curtailment, and interconnection queues across 7 US ISOs. No API key required.",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
