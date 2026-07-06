@@ -26,10 +26,10 @@ export class Client {
     this.timeoutMs = options.timeoutMs ?? 30_000;
   }
 
-  private async get<T = Row>(
+  private async fetchJson<T>(
     path: string,
     params: Record<string, string | number | boolean | undefined> = {}
-  ): Promise<T[]> {
+  ): Promise<T> {
     const search = new URLSearchParams();
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== null) search.set(key, String(value));
@@ -44,10 +44,25 @@ export class Client {
       if (!res.ok) {
         throw new Error(`kardashev: GET ${path} failed with ${res.status} ${res.statusText}`);
       }
-      return (await res.json()) as T[];
+      return (await res.json()) as T;
     } finally {
       clearTimeout(timer);
     }
+  }
+
+  private get<T = Row>(
+    path: string,
+    params: Record<string, string | number | boolean | undefined> = {}
+  ): Promise<T[]> {
+    return this.fetchJson<T[]>(path, params);
+  }
+
+  /** For endpoints that return a single JSON object rather than an array of rows. */
+  private getObject<T = Row>(
+    path: string,
+    params: Record<string, string | number | boolean | undefined> = {}
+  ): Promise<T> {
+    return this.fetchJson<T>(path, params);
   }
 
   // ------------------------------------------------------------------
@@ -361,9 +376,9 @@ export class Client {
     return this.get("/nuclear", { iso: iso?.toUpperCase() });
   }
 
-  /** Nuclear capacity/output summary. */
-  nuclearSummary(iso?: string): Promise<Row[]> {
-    return this.get("/nuclear/summary", { iso: iso?.toUpperCase() });
+  /** Nuclear capacity/output summary. Returns a single object, not rows. */
+  nuclearSummary(iso?: string): Promise<Row> {
+    return this.getObject("/nuclear/summary", { iso: iso?.toUpperCase() });
   }
 
   // ------------------------------------------------------------------
