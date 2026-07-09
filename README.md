@@ -5,13 +5,13 @@ Free, open-source JavaScript/TypeScript client for US grid data: LMP, load, fuel
 ## Install
 
 ```bash
-npm install @kardashev-labs/kardashev
+npm install kardashev
 ```
 
 ## Usage
 
 ```ts
-import { Client } from "@kardashev-labs/kardashev";
+import { Client } from "kardashev";
 
 const kl = new Client();
 
