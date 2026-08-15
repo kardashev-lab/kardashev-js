@@ -147,7 +147,7 @@ export class Client {
   // Load
   // ------------------------------------------------------------------
 
-  /** Actual grid load (MW) by ISO. */
+  /** Actual electricity Demand (MW) by ISO. Demand is consumption, not Large Load. */
   load(
     opts: { iso?: string; start?: DateInput; end?: DateInput; hours?: number; limit?: number } = {}
   ): Promise<Row[]> {
@@ -160,7 +160,7 @@ export class Client {
     });
   }
 
-  /** Load forecast (MW) for the next N hours. */
+  /** ISO Demand forecast (MW) for the next N hours. Not a Kardashev Spread Issuance. */
   loadForecast(opts: { iso?: string; hours?: number } = {}): Promise<Row[]> {
     return this.get("/load/forecast", { iso: opts.iso?.toUpperCase(), hours: opts.hours ?? 24 });
   }
@@ -209,7 +209,7 @@ export class Client {
   // Curtailment
   // ------------------------------------------------------------------
 
-  /** Renewable curtailment (MWh) by ISO. */
+  /** Published Curtailment (MWh) at ISO/fuel grain. Not Resource Curtailment. */
   curtailment(
     opts: { iso?: string; start?: DateInput; end?: DateInput; hours?: number; limit?: number } = {}
   ): Promise<Row[]> {
@@ -464,7 +464,7 @@ export class Client {
   // Interconnection queue
   // ------------------------------------------------------------------
 
-  /** Generator interconnection queue entries. */
+  /** Interconnection Project Current Observation. Request ID is ISO-native (INR at ERCOT). */
   queue(
     opts: { iso?: string; status?: string; fuelType?: string; limit?: number } = {}
   ): Promise<Row[]> {
