@@ -56,7 +56,7 @@ const kl = new Client({ baseUrl: "http://localhost:8000" });
 | `generationBattery(opts)` | Battery storage (CAISO) |
 | `generationBtmSolar(opts)` | Behind-the-meter solar (NYISO) |
 | `generationReserveMargins(iso?)` | Planning reserve margins |
-| `curtailment(opts)` | Renewable curtailment |
+| `curtailment(opts)` | Published curtailment (`days`, default 30) |
 | `interchange(ba, opts)` | Tie-line power flows |
 | `natGas(opts)` | Natural gas spot prices |
 | `natGasStorage(opts)` | EIA weekly storage report |
@@ -65,9 +65,9 @@ const kl = new Client({ baseUrl: "http://localhost:8000" });
 | `outagesSummary(iso?)` | Generator outage summary |
 | `ancillary(opts)` | Ancillary service prices |
 | `ancillaryLatest(iso?)` | Latest ancillary snapshot |
-| `nuclearStatus(iso?)` | Nuclear plant capacity/output |
-| `nuclearSummary(iso?)` | Nuclear capacity/output summary |
-| `emissions(opts)` | SO2/NOx/CO2 emission rates |
+| `nuclearStatus(opts?)` | NRC reactor status (`unit`, `days`) |
+| `nuclearSummary()` | Nuclear fleet summary (single object) |
+| `emissions(opts)` | EPA CAMPD emissions (`state`, `facilityId`, `days`) |
 | `hydroReservoirs(opts)` | Reservoir storage levels |
 | `hydroReservoirsLatest()` | Latest reservoir snapshot |
 | `hydroStreamflow(opts)` | USGS streamflow by site |
