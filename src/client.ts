@@ -211,13 +211,13 @@ export class Client {
 
   /** Published Curtailment (MWh) at ISO/fuel grain. Not Resource Curtailment. */
   curtailment(
-    opts: { iso?: string; start?: DateInput; end?: DateInput; hours?: number; limit?: number } = {}
+    opts: { iso?: string; start?: DateInput; end?: DateInput; days?: number; limit?: number } = {}
   ): Promise<Row[]> {
     return this.get("/curtailment", {
       iso: opts.iso?.toUpperCase(),
       start: fmtDate(opts.start),
       end: fmtDate(opts.end),
-      hours: opts.hours ?? 24,
+      days: opts.days ?? 30,
       limit: opts.limit ?? 2000,
     });
   }
@@ -371,29 +371,44 @@ export class Client {
   // Nuclear
   // ------------------------------------------------------------------
 
-  /** Current nuclear unit capacity and output. */
-  nuclearStatus(iso?: string): Promise<Row[]> {
-    return this.get("/nuclear", { iso: iso?.toUpperCase() });
+  /** NRC daily reactor status. Optional partial unit-name match. */
+  nuclearStatus(
+    opts: { unit?: string; start?: DateInput; end?: DateInput; days?: number } = {}
+  ): Promise<Row[]> {
+    return this.get("/nuclear", {
+      unit: opts.unit,
+      start: fmtDate(opts.start),
+      end: fmtDate(opts.end),
+      days: opts.days ?? 30,
+    });
   }
 
-  /** Nuclear capacity/output summary. Returns a single object, not rows. */
-  nuclearSummary(iso?: string): Promise<Row> {
-    return this.getObject("/nuclear/summary", { iso: iso?.toUpperCase() });
+  /** Latest power % for all reactors plus fleet totals. No query filters. */
+  nuclearSummary(): Promise<Row> {
+    return this.getObject("/nuclear/summary");
   }
 
   // ------------------------------------------------------------------
   // Emissions
   // ------------------------------------------------------------------
 
-  /** SO2, NOx, CO2 emissions by ISO. */
+  /** EPA CAMPD hourly SO2/NOx/CO2 by generator. Filter by state or facility. */
   emissions(
-    opts: { iso?: string; start?: DateInput; end?: DateInput; hours?: number; limit?: number } = {}
+    opts: {
+      state?: string;
+      facilityId?: string;
+      start?: DateInput;
+      end?: DateInput;
+      days?: number;
+      limit?: number;
+    } = {}
   ): Promise<Row[]> {
     return this.get("/emissions", {
-      iso: opts.iso?.toUpperCase(),
+      state: opts.state?.toUpperCase(),
+      facility_id: opts.facilityId,
       start: fmtDate(opts.start),
       end: fmtDate(opts.end),
-      hours: opts.hours ?? 24,
+      days: opts.days ?? 7,
       limit: opts.limit ?? 2000,
     });
   }
